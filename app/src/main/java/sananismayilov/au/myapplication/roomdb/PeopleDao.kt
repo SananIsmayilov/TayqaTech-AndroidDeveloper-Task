@@ -11,14 +11,17 @@ interface PeopleDao {
     @Insert
     suspend fun insertPeople(peopleEntity: PeopleEntity)
 
-    @Query("SELECT * FROM People WHERE countryId = :countryId AND cityId = :cityId")
-    suspend fun getPeopleByCountryAndCity(countryId: Int, cityId: Int): List<PeopleEntity>
+    @Query("SELECT * FROM People WHERE cityId = :cityId")
+    suspend fun getPeopleByCity(cityId: Int): List<PeopleEntity>
 
     @Query("SELECT * FROM People ")
     suspend fun getAllPeople(): List<PeopleEntity>
 
     @Query("DELETE FROM People")
     suspend fun deleteAllPeople()
+
+    @Query("SELECT * FROM People WHERE countryId = :countryId")
+    suspend fun getPeopleByCountry(countryId: Int): List<PeopleEntity>
 
 }
 

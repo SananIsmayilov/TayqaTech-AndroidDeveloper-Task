@@ -1,40 +1,86 @@
 package sananismayilov.au.myapplication.ui
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.os.Handler
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import sananismayilov.au.myapplication.R
+import kotlinx.coroutines.delay
+import sananismayilov.au.myapplication.adapter.CountryAdapter
 import sananismayilov.au.myapplication.adapter.PeopleAdapter
 import sananismayilov.au.myapplication.databinding.ActivityMainBinding
-import sananismayilov.au.myapplication.retrofit.RetrofitClient
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
-    private lateinit var mainViewModel : MainViewModel
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+    private var filterclick = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        mainViewModel.getDatafromApi(applicationContext)
+        sharedPreferences = this.getSharedPreferences("PeoplePref", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
 
-        mainViewModel.getAllDatafromRoom(applicationContext)
+        mainBinding.swipelayout.setOnRefreshListener {
+            mainViewModel.getDatafromApi(this)
+            mainViewModel.getAllDatafromRoom(this)
+            Handler().postDelayed(Runnable {
+                mainBinding.swipelayout.isRefreshing = false
+            }, 2000)
+        }
 
-        observe()
+        mainBinding.filterbutton.setOnClickListener {
+            showFilter()
+        }
+
+        observePeople()
     }
 
-    fun observe(){
+    fun observePeople() {
         mainViewModel.peoplelist.observe(this, Observer {
             mainBinding.peoplerecyclerview.layoutManager = LinearLayoutManager(this)
-            val peopleadapter = PeopleAdapter(this,it)
+            val peopleadapter = PeopleAdapter(this, it)
             mainBinding.peoplerecyclerview.adapter = peopleadapter
+            mainBinding.filterrecyclerview.visibility = View.INVISIBLE
         })
+
+        mainViewModel.countrylist.observe(this, Observer {
+            mainBinding.filterrecyclerview.layoutManager = LinearLayoutManager(this)
+            val countryAdapter = CountryAdapter(this, it,mainViewModel)
+            mainBinding.filterrecyclerview.adapter = countryAdapter
+        })
+    }
+
+    fun showFilter() {
+        if (!filterclick) {
+            mainViewModel.getCountry(this)
+            mainBinding.filterrecyclerview.visibility = View.VISIBLE
+            filterclick = true
+        } else {
+            mainBinding.filterrecyclerview.visibility = View.INVISIBLE
+            filterclick = false
+        }
+    }
+
+    override fun onResume() {
+        val first = sharedPreferences.getBoolean("firstopen", false)
+        if (!first) {
+            mainViewModel.getDatafromApi(applicationContext)
+            editor.putBoolean("firstopen", true)
+            editor.commit()
+        }
+        mainViewModel.getAllDatafromRoom(this)
+        super.onResume()
     }
 }
