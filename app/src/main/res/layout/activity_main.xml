@@ -6,13 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="People"
+        app:titleTextColor="@color/black" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/peoplerecyclerview"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:id="@+id/filterbutton"
+        android:src="@drawable/filter"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="50dp"/>
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:id="@+id/sortbutton"
+        android:src="@drawable/sort"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/filterbutton"
+        android:layout_height="50dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

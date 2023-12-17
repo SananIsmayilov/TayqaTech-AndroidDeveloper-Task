@@ -6,7 +6,8 @@ import sananismayilov.au.myapplication.util.Util.BASE_URL
 
 class RetrofitClient {
     companion object {
-        private var instance : CountryAPI? = null
+        private var instance: CountryAPI? = null
+
         @Synchronized
         fun getInstance(): CountryAPI {
             if (instance == null)
@@ -18,4 +19,5 @@ class RetrofitClient {
 
             return instance!!
         }
-}}
+    }
+}

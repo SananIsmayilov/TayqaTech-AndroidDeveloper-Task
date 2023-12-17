@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+   id("kotlin-kapt")
 }
 
 android {
@@ -28,11 +28,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+    viewBinding {
+        enable = true
     }
 }
 
@@ -51,10 +54,10 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.6.1")
 
     //room db
-    implementation ("androidx.room:room-runtime:2.5.0-beta02")
-    kapt("androidx.room:room-compiler:2.5.0-beta02")
-    implementation("androidx.room:room-ktx:2.4.3")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation ("androidx.room:room-runtime:2.6.1")
+   kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.6.0")

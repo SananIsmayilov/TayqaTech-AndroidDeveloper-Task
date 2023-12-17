@@ -3,43 +3,38 @@ package sananismayilov.au.myapplication.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import sananismayilov.au.myapplication.R
+import sananismayilov.au.myapplication.adapter.PeopleAdapter
+import sananismayilov.au.myapplication.databinding.ActivityMainBinding
 import sananismayilov.au.myapplication.retrofit.RetrofitClient
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var mainViewModel : MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mainBinding.root)
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    try {
-                        val response = RetrofitClient.getInstance().getCountry()
-                        if (response.isSuccessful) {
-                            val countryList = response.body()
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainViewModel.getDatafromApi(applicationContext)
 
-                            for (i in countryList?.countryList!!){
-                                println("----")
-                                println("${i.name} : " )
-                                for (j in i.cityList){
-                                    println("${j.name} : " )
-                                    for (x in j.peopleList){
-                                        println("${x.name} : " )
-                                        println("${x.surname} : " )
-                                    }
-                                }
-                            }
+        mainViewModel.getAllDatafromRoom(applicationContext)
 
-                        } else {
-                            // Hata durumunu işleyin
-                            println("ERROR unsuccessful: ${response.code()}")
-                        }
-                    } catch (e: Exception) {
-                        // Hata durumunu işleyin
-                        println("ERROR: ${e.printStackTrace()}")
-                    }
-                }
+        observe()
+    }
+
+    fun observe(){
+        mainViewModel.peoplelist.observe(this, Observer {
+            mainBinding.peoplerecyclerview.layoutManager = LinearLayoutManager(this)
+            val peopleadapter = PeopleAdapter(this,it)
+            mainBinding.peoplerecyclerview.adapter = peopleadapter
+        })
     }
 }

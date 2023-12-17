@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        android:layout_height="70dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/peopletextview"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="People"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#E45B5B"
+            android:layout_height="wrap_content"/>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
