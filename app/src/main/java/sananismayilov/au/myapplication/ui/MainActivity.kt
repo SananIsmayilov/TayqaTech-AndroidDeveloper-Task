@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity() {
             mainBinding.peoplerecyclerview.adapter = peopleadapter
             mainBinding.filterrecyclerview.visibility = View.INVISIBLE
             mainBinding.sortrecyclerview.visibility = View.INVISIBLE
+            filterclick = false
+            sortclick = false
         })
 
         mainViewModel.countrylist.observe(this, Observer {
