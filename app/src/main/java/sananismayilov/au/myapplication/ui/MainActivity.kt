@@ -16,6 +16,7 @@ import sananismayilov.au.myapplication.adapter.CityAdapter
 import sananismayilov.au.myapplication.adapter.CountryAdapter
 import sananismayilov.au.myapplication.adapter.PeopleAdapter
 import sananismayilov.au.myapplication.databinding.ActivityMainBinding
+import sananismayilov.au.myapplication.util.Util.checkInternet
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,7 +36,8 @@ class MainActivity : AppCompatActivity() {
         editor = sharedPreferences.edit()
 
         mainBinding.swipelayout.setOnRefreshListener {
-            mainViewModel.getDatafromApi(this)
+            val internetconnection = checkInternet(this)
+            mainViewModel.getDatafromApi(this,internetconnection)
             mainViewModel.getAllDatafromRoom(this)
             Handler().postDelayed(Runnable {
                 mainBinding.swipelayout.isRefreshing = false
@@ -100,7 +102,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         val first = sharedPreferences.getBoolean("firstopen", false)
         if (!first) {
-            mainViewModel.getDatafromApi(applicationContext)
+            val internetconnection = checkInternet(this)
+            mainViewModel.getDatafromApi(applicationContext,internetconnection)
             editor.putBoolean("firstopen", true)
             editor.commit()
         }

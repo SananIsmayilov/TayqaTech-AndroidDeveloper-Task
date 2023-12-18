@@ -18,27 +18,32 @@ import sananismayilov.au.myapplication.roomdb.PeopleDao
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val countryAPI: CountryAPI,val peopleDao: PeopleDao) : ViewModel() {
+class MainViewModel @Inject constructor(val countryAPI: CountryAPI, val peopleDao: PeopleDao) :
+    ViewModel() {
     val peoplelist = MutableLiveData<List<PeopleEntity>>()
     val countrylist = MutableLiveData<List<Country>>()
     val citylist = MutableLiveData<List<City>>()
 
-    fun getDatafromApi(context: Context) {
+    fun getDatafromApi(context: Context, internetconnection: Boolean) {
         CoroutineScope(Dispatchers.Main).launch {
-            val response = countryAPI.getCountry()
-            if (response.isSuccessful) {
-                peopleDao.deleteAllPeople()
-                val countrylist = response.body()?.countryList
-                for (i in countrylist!!) {
-                    for (j in i.cityList) {
-                        for (x in j.peopleList) {
-                            val peopleEntity = PeopleEntity(
-                                x.humanId, x.name, x.surname, j.cityId, i.countryId
-                            )
-                            peopleDao.insertPeople(peopleEntity)
+            if (internetconnection) {
+                val response = countryAPI.getCountry()
+                if (response.isSuccessful) {
+                    peopleDao.deleteAllPeople()
+                    val countrylist = response.body()?.countryList
+                    for (i in countrylist!!) {
+                        for (j in i.cityList) {
+                            for (x in j.peopleList) {
+                                val peopleEntity = PeopleEntity(
+                                    x.humanId, x.name, x.surname, j.cityId, i.countryId
+                                )
+                                peopleDao.insertPeople(peopleEntity)
+                            }
                         }
                     }
                 }
+            } else {
+                getAllDatafromRoom(context)
             }
         }
 
@@ -52,7 +57,7 @@ class MainViewModel @Inject constructor(val countryAPI: CountryAPI,val peopleDao
         }
     }
 
-    fun getCitywithId( country : Country) {
+    fun getCitywithId(country: Country) {
         citylist.value = country.cityList
     }
 
