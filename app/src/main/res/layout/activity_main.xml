@@ -61,6 +61,15 @@
             app:layout_constraintBottom_toTopOf="@id/filterbutton"
             app:layout_constraintLeft_toLeftOf="parent" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sortrecyclerview"
+            android:background="#E9EEEF"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/filterbutton"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

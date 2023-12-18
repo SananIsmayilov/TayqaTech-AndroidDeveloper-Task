@@ -11,9 +11,6 @@ interface PeopleDao {
     @Insert
     suspend fun insertPeople(peopleEntity: PeopleEntity)
 
-    @Query("SELECT * FROM People WHERE cityId = :cityId")
-    suspend fun getPeopleByCity(cityId: Int): List<PeopleEntity>
-
     @Query("SELECT * FROM People ")
     suspend fun getAllPeople(): List<PeopleEntity>
 

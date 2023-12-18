@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import sananismayilov.au.myapplication.adapter.CityAdapter
 import sananismayilov.au.myapplication.adapter.CountryAdapter
 import sananismayilov.au.myapplication.adapter.PeopleAdapter
 import sananismayilov.au.myapplication.databinding.ActivityMainBinding
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     private var filterclick = false
+    private var sortclick = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -43,6 +45,9 @@ class MainActivity : AppCompatActivity() {
         mainBinding.filterbutton.setOnClickListener {
             showFilter()
         }
+        mainBinding.sortbutton.setOnClickListener {
+            showSort()
+        }
 
         observePeople()
     }
@@ -57,8 +62,15 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.countrylist.observe(this, Observer {
             mainBinding.filterrecyclerview.layoutManager = LinearLayoutManager(this)
-            val countryAdapter = CountryAdapter(this, it,mainViewModel)
+            val countryAdapter = CountryAdapter(this, it, mainViewModel)
             mainBinding.filterrecyclerview.adapter = countryAdapter
+        })
+
+        mainViewModel.citylist.observe(this, Observer {
+            mainBinding.sortrecyclerview.layoutManager = LinearLayoutManager(this)
+            val cityAdapter = CityAdapter(this, it)
+            mainBinding.sortrecyclerview.adapter = cityAdapter
+
         })
     }
 
@@ -66,10 +78,22 @@ class MainActivity : AppCompatActivity() {
         if (!filterclick) {
             mainViewModel.getCountry(this)
             mainBinding.filterrecyclerview.visibility = View.VISIBLE
+            mainBinding.sortrecyclerview.visibility = View.INVISIBLE
             filterclick = true
         } else {
             mainBinding.filterrecyclerview.visibility = View.INVISIBLE
             filterclick = false
+        }
+    }
+
+    fun showSort() {
+        if (!sortclick) {
+            mainBinding.sortrecyclerview.visibility = View.VISIBLE
+            mainBinding.filterrecyclerview.visibility = View.INVISIBLE
+            sortclick = true
+        } else {
+            mainBinding.sortrecyclerview.visibility = View.INVISIBLE
+            sortclick = false
         }
     }
 

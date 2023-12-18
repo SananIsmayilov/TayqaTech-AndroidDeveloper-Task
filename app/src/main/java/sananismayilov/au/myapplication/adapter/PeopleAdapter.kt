@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import sananismayilov.au.myapplication.data.PeopleEntity
-import sananismayilov.au.myapplication.databinding.PeoplerowBinding
+import sananismayilov.au.myapplication.databinding.PeoplelayoutBinding
 
 class PeopleAdapter(val context : Context,val peoplelist : List<PeopleEntity>) : RecyclerView.Adapter<PeopleAdapter.PeopleHolder>() {
-    inner class PeopleHolder(val peoplerawbinding : PeoplerowBinding) : RecyclerView.ViewHolder(peoplerawbinding.root)
+    inner class PeopleHolder(val peoplerawbinding : PeoplelayoutBinding) : RecyclerView.ViewHolder(peoplerawbinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleHolder {
-        val view = PeoplerowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = PeoplelayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return PeopleHolder(view)
     }
 

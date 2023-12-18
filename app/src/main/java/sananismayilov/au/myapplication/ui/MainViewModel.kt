@@ -1,5 +1,6 @@
 package sananismayilov.au.myapplication.ui
 
+import City
 import Country
 import android.content.Context
 import android.widget.Toast
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(val countryAPI: CountryAPI,val peopleDao: PeopleDao) : ViewModel() {
     val peoplelist = MutableLiveData<List<PeopleEntity>>()
     val countrylist = MutableLiveData<List<Country>>()
+    val citylist = MutableLiveData<List<City>>()
 
     fun getDatafromApi(context: Context) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -50,10 +52,8 @@ class MainViewModel @Inject constructor(val countryAPI: CountryAPI,val peopleDao
         }
     }
 
-    fun getsendidDatafromRoom(city_id: Int, context: Context) {
-        CoroutineScope(Dispatchers.Main).launch {
-            peoplelist.value = peopleDao.getPeopleByCity(city_id)
-        }
+    fun getCitywithId( country : Country) {
+        citylist.value = country.cityList
     }
 
     fun getCountry(context: Context) {
