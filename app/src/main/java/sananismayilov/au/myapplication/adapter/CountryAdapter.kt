@@ -26,7 +26,7 @@ class CountryAdapter(val context: Context, val countrylist: List<Country>,val ma
         val country = countrylist[position]
         holder.binding.countryname.text = country.name
         holder.binding.countrylinear.setOnClickListener {
-            mainViewModel.getCountrytosendid(country.countryId,context)
+            mainViewModel.getCountrywithId(country.countryId,context,)
             mainViewModel.getCitywithId(country)
             holder.binding.checkbox.isChecked = true
         }

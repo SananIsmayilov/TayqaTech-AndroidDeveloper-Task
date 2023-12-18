@@ -13,7 +13,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import sananismayilov.au.myapplication.data.PeopleEntity
 import sananismayilov.au.myapplication.retrofit.CountryAPI
-import sananismayilov.au.myapplication.roomdb.PeopleDB
 import sananismayilov.au.myapplication.roomdb.PeopleDao
 import javax.inject.Inject
 
@@ -72,9 +71,15 @@ class MainViewModel @Inject constructor(val countryAPI: CountryAPI, val peopleDa
         }
     }
 
-    fun getCountrytosendid(countryid: Int, context: Context) {
+    fun getCountrywithId(countryid: Int, context: Context) {
         CoroutineScope(Dispatchers.Main).launch {
-            peoplelist.value = peopleDao.getPeopleByCountry(countryid)
+            peoplelist.value = peopleDao.getPeoplewithCountryid(countryid)
+        }
+    }
+
+    fun getPeoplewithcityId(cityid: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            peoplelist.value = peopleDao.getPeoplewithCityId(cityid)
         }
     }
 }

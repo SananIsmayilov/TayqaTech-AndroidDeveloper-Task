@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import sananismayilov.au.myapplication.databinding.CitylayoutBinding
+import sananismayilov.au.myapplication.ui.MainViewModel
 
-class CityAdapter(val context: Context,val citylist : List<City>) :  RecyclerView.Adapter<CityAdapter.CityHolder>(){
+class CityAdapter(val context: Context,val citylist : List<City>,val mainViewModel: MainViewModel) :  RecyclerView.Adapter<CityAdapter.CityHolder>(){
     inner class CityHolder(val binding : CitylayoutBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityHolder {
@@ -21,6 +22,10 @@ class CityAdapter(val context: Context,val citylist : List<City>) :  RecyclerVie
     }
 
     override fun onBindViewHolder(holder: CityHolder, position: Int) {
-        holder.binding.cityname.text = citylist[position].name
+        val city = citylist[position]
+        holder.binding.cityname.text = city.name
+        holder.binding.citylinear.setOnClickListener {
+            mainViewModel.getPeoplewithcityId(city.cityId)
+        }
     }
 }

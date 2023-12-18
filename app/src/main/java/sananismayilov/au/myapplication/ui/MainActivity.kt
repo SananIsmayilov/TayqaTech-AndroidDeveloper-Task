@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         mainBinding.swipelayout.setOnRefreshListener {
             val internetconnection = checkInternet(this)
-            mainViewModel.getDatafromApi(this,internetconnection)
+            mainViewModel.getDatafromApi(this, internetconnection)
             mainViewModel.getAllDatafromRoom(this)
             Handler().postDelayed(Runnable {
                 mainBinding.swipelayout.isRefreshing = false
@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             val peopleadapter = PeopleAdapter(this, it)
             mainBinding.peoplerecyclerview.adapter = peopleadapter
             mainBinding.filterrecyclerview.visibility = View.INVISIBLE
+            mainBinding.sortrecyclerview.visibility = View.INVISIBLE
         })
 
         mainViewModel.countrylist.observe(this, Observer {
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.citylist.observe(this, Observer {
             mainBinding.sortrecyclerview.layoutManager = LinearLayoutManager(this)
-            val cityAdapter = CityAdapter(this, it)
+            val cityAdapter = CityAdapter(this, it, mainViewModel)
             mainBinding.sortrecyclerview.adapter = cityAdapter
 
         })
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         val first = sharedPreferences.getBoolean("firstopen", false)
         if (!first) {
             val internetconnection = checkInternet(this)
-            mainViewModel.getDatafromApi(applicationContext,internetconnection)
+            mainViewModel.getDatafromApi(applicationContext, internetconnection)
             editor.putBoolean("firstopen", true)
             editor.commit()
         }

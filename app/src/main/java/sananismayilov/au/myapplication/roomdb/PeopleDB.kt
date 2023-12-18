@@ -10,20 +10,4 @@ import sananismayilov.au.myapplication.data.PeopleEntity
 abstract class PeopleDB : RoomDatabase() {
     abstract fun getDao(): PeopleDao
 
-    companion object {
-        @Volatile
-        private var instance: PeopleDB? = null
-        private var lock = Any()
-
-        operator fun invoke (context: Context) = instance ?: synchronized(lock){
-            instance?: makeDatabase(context).also {
-                instance = it
-            }
-        }
-
-
-        private fun makeDatabase(context : Context) = Room.databaseBuilder(
-            context.applicationContext,PeopleDB::class.java,"Notedb"
-        ).build()
-    }
 }

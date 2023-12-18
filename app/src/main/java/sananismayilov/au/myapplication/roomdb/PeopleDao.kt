@@ -1,6 +1,5 @@
 package sananismayilov.au.myapplication.roomdb
 
-import People
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -18,7 +17,10 @@ interface PeopleDao {
     suspend fun deleteAllPeople()
 
     @Query("SELECT * FROM People WHERE countryId = :countryId")
-    suspend fun getPeopleByCountry(countryId: Int): List<PeopleEntity>
+    suspend fun getPeoplewithCountryid(countryId: Int): List<PeopleEntity>
+
+    @Query("SELECT * FROM People WHERE cityId = :cityId")
+    suspend fun getPeoplewithCityId(cityId: Int): List<PeopleEntity>
 
 }
 
