@@ -60,14 +60,16 @@ class MainViewModel @Inject constructor(val countryAPI: CountryAPI, val peopleDa
         citylist.value = country.cityList
     }
 
-    fun getCountry(context: Context) {
+    fun getCountry(context: Context, internetconnection: Boolean) {
         CoroutineScope(Dispatchers.Main).launch {
-            val response = countryAPI.getCountry()
-            if (response.isSuccessful) {
-                countrylist.value = response.body()?.countryList
+            if (internetconnection) {
+                val response = countryAPI.getCountry()
+                if (response.isSuccessful) {
+                    countrylist.value = response.body()?.countryList
+                }
+            }else {
+                countrylist.value = arrayListOf()
             }
-
-
         }
     }
 

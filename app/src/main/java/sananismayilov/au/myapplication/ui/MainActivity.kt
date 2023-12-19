@@ -80,8 +80,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showFilter() {
+        val internetconnection = checkInternet(this)
         if (!filterclick) {
-            mainViewModel.getCountry(this)
+            mainViewModel.getCountry(this,internetconnection)
             mainBinding.filterrecyclerview.visibility = View.VISIBLE
             mainBinding.sortrecyclerview.visibility = View.INVISIBLE
             filterclick = true
