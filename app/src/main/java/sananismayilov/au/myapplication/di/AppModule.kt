@@ -37,7 +37,7 @@ object AppModule {
     @Singleton
     fun providePeopleDb(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
-        PeopleDB::class.java, "Notedb"
+        PeopleDB::class.java, "Notedb" // Yanlışlıqla DB adı səhv gedib.Əslində PeopleDb olmalı idi.
     ).build()
 
     @Provides
