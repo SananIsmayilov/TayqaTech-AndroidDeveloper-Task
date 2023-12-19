@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import sananismayilov.au.myapplication.databinding.CountrylayoutBinding
-import sananismayilov.au.myapplication.ui.MainViewModel
+import sananismayilov.au.myapplication.ui.viewmodel.MainViewModel
 
 class CountryAdapter(val context: Context, val countrylist: List<Country>,val mainViewModel: MainViewModel) :
     RecyclerView.Adapter<CountryAdapter.CountryHolder>() {

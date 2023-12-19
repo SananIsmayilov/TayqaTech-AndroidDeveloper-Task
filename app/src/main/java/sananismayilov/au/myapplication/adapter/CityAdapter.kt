@@ -5,9 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import sananismayilov.au.myapplication.databinding.CitylayoutBinding
-import sananismayilov.au.myapplication.ui.MainViewModel
+import sananismayilov.au.myapplication.ui.viewmodel.MainViewModel
 
 class CityAdapter(val context: Context,val citylist : List<City>,val mainViewModel: MainViewModel) :  RecyclerView.Adapter<CityAdapter.CityHolder>(){
     inner class CityHolder(val binding : CitylayoutBinding) : RecyclerView.ViewHolder(binding.root)

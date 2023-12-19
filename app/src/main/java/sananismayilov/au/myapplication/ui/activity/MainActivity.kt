@@ -1,4 +1,4 @@
-package sananismayilov.au.myapplication.ui
+package sananismayilov.au.myapplication.ui.activity
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,12 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import sananismayilov.au.myapplication.adapter.CityAdapter
 import sananismayilov.au.myapplication.adapter.CountryAdapter
 import sananismayilov.au.myapplication.adapter.PeopleAdapter
 import sananismayilov.au.myapplication.databinding.ActivityMainBinding
+import sananismayilov.au.myapplication.ui.viewmodel.MainViewModel
 import sananismayilov.au.myapplication.util.Util.checkInternet
 
 @AndroidEntryPoint

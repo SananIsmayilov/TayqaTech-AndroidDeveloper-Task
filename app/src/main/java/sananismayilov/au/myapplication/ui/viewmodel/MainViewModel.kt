@@ -1,4 +1,4 @@
-package sananismayilov.au.myapplication.ui
+package sananismayilov.au.myapplication.ui.viewmodel
 
 import City
 import Country
@@ -67,7 +67,7 @@ class MainViewModel @Inject constructor(val countryAPI: CountryAPI, val peopleDa
                 if (response.isSuccessful) {
                     countrylist.value = response.body()?.countryList
                 }
-            }else {
+            } else {
                 countrylist.value = arrayListOf()
             }
         }
